@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>icons</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <link rel="shortcut icon" href="http://icons8.com/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="http://icons8.com/favicon.ico" type="image/x-icon">
+
+        <!-- build:css(.) styles/vendor.css -->
+        <!-- bower:css -->
+        <link rel="stylesheet" href="bower_components/ult-reset/reset.css">
+        <!-- endbower -->
+        <!-- endbuild -->
+
+        <!-- build:css(.tmp) -->
+        <link rel="stylesheet" href="styles/common.css">
+        <link rel="stylesheet" href="styles/icons.css">
+        <!-- endbuild -->
+    </head>
+    <body data-ng-app="icons8">
+        <div data-ng-include="'views/icons.html'" data-ng-controller="icons"></div>
+
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/angular/angular.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/icons.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>
