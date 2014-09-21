@@ -1,0 +1,5 @@
+{
+    "host": "http://api.icons8.com",
+    "path": "/api/iconsets/search",
+    "amount": "30"
+}

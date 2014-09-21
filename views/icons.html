@@ -1,32 +1,50 @@
 <div class="content">
+
     <h1>icons</h1>
-    <p class="description">This is an archive utility allowing to add files to archive and extract them back.<br/>
-        Help to assign better icons to the toolbar buttons: search the appropriate icons and put them in the right places.</p>
+    <p class="description">
+        This is an archive utility allowing to add files to archive and extract them back.<br/>
+        Help to assign better icons to the toolbar buttons: search the appropriate icons and put them in the right places.
+    </p>
 
     <div class="page">
         <div class="page-title">
             icons
         </div>
         <ul class="icons-box">
-            <li class="icon-box" data-ng-repeat="iconBox in iconsBox" title="Add icon for '{{iconBox}}'">
-                <div class="icon-cell" data-drop="true" data-ng-model='iconsBoxContainer' data-jqyoui-droppable="{index: {{$index}}, onDrop:'dropCallback',onOver: 'overCallback', onOut: 'outCallback'}">
-                    <div data-drag="true" data-jqyoui-options="{revert: 'invalid'}" data-ng-model="iconsBoxContainer" data-jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}">
+            <li class="icon-box" data-ng-repeat="iconBox in iconsBox" title="Add icon for '{{iconBox.title}}'">
+                <div class="icon-cell" data-box-id="{{iconBox.id}}" data-drop="true" data-ng-model='iconsBoxContainer' data-jqyoui-droppable="{index: {{$index}}, onDrop:'dropCallback',onOver: 'overCallback', onOut: 'outCallback'}">
+                    <!--<div data-drag="true" data-jqyoui-options="{revert: 'invalid'}" data-ng-model="iconsBoxContainer" data-jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true}">-->
                         <img class="search-icon-img" data-ng-src="{{iconsBoxContainer[$index].src}}" data-ng-show="iconsBoxContainer[$index].src" />
-                    </div>
+                    <!--</div>-->
                 </div>
-                <span class="icon-box-label">{{iconBox}}</span>
+                <span class="icon-box-label">{{iconBox.title}}</span>
             </li>
         </ul>
     </div>
 
     <div class="search-wrap">
-        <form class="search-block">
-            <input />
-            <button type="submit">Search</button>
+        <form class="search-block" data-ng-submit="searchSubmit(search)">
+            <input type="text" data-ng-model="search" name="search"  />
+            <button type="submit" data-ng-disabled="!search">Search</button>
         </form>
+        <ul data-ng-show="searchResult">
+            <!--<li class="search-icon" data-ng-repeat="iconSearch in searchResult" data-drop="true" data-ng-model='searchResult' data-jqyoui-droppable="{index: {{$index}}}">-->
+            <li class="search-icon" data-ng-repeat="iconSearch in searchResult" data-ng-model='searchResult'>
+                <img class="search-icon-img" alt="" data-icon-id="{{iconSearch.id}}" data-ng-show="iconSearch.src" data-ng-src="{{iconSearch.src}}"  data-drag="true" data-jqyoui-options="{revert: 'invalid'}" data-ng-model="searchResult" data-jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true, onStart:'startCallback(iconSearch, $index)', onStop: 'stopCallback', onDrag: 'dragCallback'}" />
+                <span>{{iconSearch.name}}</span>
+            </li>
+        </ul>
+        <span data-ng-show="!searchResult && loaded">Loading...</span>
+    </div>
+
+    <div class="results">
+        <h2>{{getScore()}}</h2>
+        <p>People agree with you. <br />That is your score.</p>
         <ul>
-            <li class="search-icon" data-ng-repeat="iconSearch in searchResult" data-drop="true" data-ng-model='searchResult' data-jqyoui-droppable="{index: {{$index}}}">
-                <img class="search-icon-img" alt="" data-ng-show="iconSearch.src" data-ng-src="{{iconSearch.src}}"  data-drag="true" data-jqyoui-options="{revert: 'invalid'}" data-ng-model="searchResult" data-jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true, onStart:'startCallback(iconSearch, $index)', onStop: 'stopCallback', onDrag: 'dragCallback'}" />
+            <li data-ng-repeat="item in statistic">
+                <img class="search-icon-img" data-ng-src="data:image/svg+xml;base64,{{item.src}}" />
+                <span>{{item.percent}}%</span>
+                <span data-ng-show="item.choice">&#8211; Your choice</span>
             </li>
         </ul>
     </div>

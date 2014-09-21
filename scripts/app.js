@@ -3,11 +3,15 @@
 angular
     .module('icons8', [
         'xml',
-        'ngDragDrop'
+        'oniyi.configurator',
+        'ngDragDrop',
+        'LocalStorageModule'
     ])
     .config([
         '$httpProvider',
-        function ($httpProvider) {
+        'configServiceProvider',
+        function ($httpProvider, configServiceProvider) {
             $httpProvider.interceptors.push('xmlHttpInterceptor');
+            configServiceProvider.disableEnvironmentConfig();
         }
     ]);
