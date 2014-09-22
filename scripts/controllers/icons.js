@@ -9,7 +9,6 @@ angular.module('icons8')
         '$q',
         function ($scope, $http, configService, localStorageService, $q) {
 
-            //localStorageService.clearAll(); // Command for clear local storage
             var score = {}; // Object with all results for current user
             var api = {}; // Object with path to API
 
@@ -85,12 +84,14 @@ angular.module('icons8')
 
             $scope.searchSubmit = function(search) {
                 var query = api.host + api.path + '?term=' + (search || '') + '&amount=' + api.amount;
-                //var query = 'http://api.icons8.com/api/iconsets/search?term=tes&amount=30';
                 $scope.loaded = true;
+                $scope.noResults = false;
                 $scope.searchResult = null;
+                $scope.disableBtn = true;
                 $http.get(query)
                     .then(
                         function(response) {
+                            $scope.disableBtn = false;
                             $scope.loaded = false;
                             if (!response.xml) {
                                 console.error('Server error: "response.xml" is not defined');
@@ -116,8 +117,12 @@ angular.module('icons8')
                             });
 
                             $scope.searchResult = icons;
+                            if (!icons.length) {
+                                $scope.noResults = true;
+                            }
                         },
                         function(err) {
+                            $scope.disableBtn = false;
                             $scope.loaded = false;
                             console.error('Server error: ', err);
                             alert('Server error');
@@ -125,22 +130,20 @@ angular.module('icons8')
                     );
             };
 
-            $scope.startCallback = function(event, ui, title) {
-                //console.log('You started draggin: ' + title.name);
+            $scope.startCallback = function(event, ui, el) {
+                $scope.startDnd = true;
             };
 
             $scope.stopCallback = function(event, ui) {
-                //console.log('Why did you stop draggin me?');
-            };
-
-            $scope.dragCallback = function(event, ui) {
-                //console.log('hey, look I`m flying');
+                $scope.startDnd = false;
             };
 
             // Callback when the icon is placed in the box
             $scope.dropCallback = function(event, ui) {
+                angular.element(event.target).addClass('drop-dnd');
                 var slot_id = angular.element(event.target).attr('data-box-id');
                 var icon_id = ui.draggable.attr('data-icon-id');
+                $scope.showResults = true;
                 // Hardcode object for local storage
                 var icon = {
                     "id": "" + icon_id,
@@ -166,11 +169,11 @@ angular.module('icons8')
             };
 
             $scope.overCallback = function(event, ui) {
-                //console.log('Look, I`m over you', event.target);
+                angular.element(event.target).addClass('over-dnd');
             };
 
             $scope.outCallback = function(event, ui) {
-                //console.log('I`m not, hehe');
+                angular.element(event.target).removeClass('over-dnd');
             };
         }
     ]);
