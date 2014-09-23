@@ -33,7 +33,7 @@
             </form>
             <ul class="search-result" data-ng-show="searchResult">
                 <li class="search-icon" data-ng-repeat="iconSearch in searchResult" data-ng-model='searchResult'>
-                    <img class="search-icon-img" alt="" data-icon-id="{{iconSearch.id}}" data-ng-show="iconSearch.src" data-ng-src="{{iconSearch.src}}" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" data-ng-model="searchResult" data-jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true, onStart:'startCallback(iconSearch, $index)', onStop: 'stopCallback', onDrag: 'dragCallback'}" />
+                    <img class="search-icon-img" alt="" data-icon-id="{{iconSearch.id}}" data-ng-show="iconSearch.src" data-ng-src="{{iconSearch.src}}" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" data-ng-model="searchResult" data-jqyoui-draggable="{index: {{$index}},placeholder:true,animate:true, onStart:'startCallback(iconSearch, $index)', onStop: 'stopCallback'}" />
                     <p class="search-label" title="{{iconSearch.name}}">{{iconSearch.name}}</p>
                 </li>
             </ul>
